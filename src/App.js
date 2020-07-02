@@ -1,6 +1,7 @@
 import React from 'react';
+import NewPost from "./Components/post.js";
 import './App.css';
-import { Button, Card,Icon} from 'semantic-ui-react'
+import { Button, Card, Icon, Segment} from 'semantic-ui-react';
 
 class App extends React.Component {
   constructor(props){
@@ -10,20 +11,6 @@ class App extends React.Component {
     };
   }
   
-  handleCreate = event => {
-    if (event.key === "Enter") {
-      console.log(event.target.value)
-      const post = {
-        id: Math.floor(Math.random() * 100000000),
-        post_title: event.target.value,
-        post_type: false
-      };
-      const newPost = [...this.state.posts];
-      newPost.push(post);
-      this.setState({ posts: newPost });
-    }
-  };
-
   componentDidMount(){
     fetch('http://localhost:8000/api/posts/')
     .then(res => res.json())
@@ -58,9 +45,8 @@ class App extends React.Component {
     let res ={method: "GET"}
     fetch(`http://localhost:8000/api/posts/${id}/downVote/`, res)
     this.Posts()
-    window.location.reload()
   }
-  
+
   Totalvote = () => {
     fetch('http://127.0.0.1:8000/api/posts/totalVote/')
     .then(res => res.json())
@@ -70,17 +56,31 @@ class App extends React.Component {
   render(){
     return (
       <React.Fragment>
-      <div>
+      
+            <Segment
+              style={{
+                width: "90%",
+                margin: "0 auto",
+                backgroundColor: "transparent"
+              }}
+            >
+      <div style={{
+                width: "45%",
+                margin: "30px auto",
+                backgroundColor: "transparent"
+              }}>
         <h1>Posts</h1>
         <Button onClick={this.Posts}>Home</Button>
         <Button onClick={this.Boast}> Boasts</Button>
         <Button onClick={this.Roast}> Roasts</Button>
         <Button onClick={this.Totalvote}>Most Popular</Button>
+      </div>
+      <NewPost />
        <p>
           {this.state.posts.map((post) => {
             return (
-              <React.Fragment style={{ padding: "8px 14px", textAling:'center'}}>
-              <Card style={{ padding: "8px 14px", width:'383px' }}>
+              <React.Fragment style={{ padding: "8px 14px", margin: "0 auto",}}>
+              <Card style={{ padding: "8px 14px", width:'60%', margin: "0 auto" }}>
               <Card.Content>
                 <Card.Header>{post.post_title}</Card.Header>
                 <Card.Description style={{ }}>
@@ -112,7 +112,8 @@ class App extends React.Component {
             ); 
           })}
       </p>
-      </div>
+      
+      </Segment>
       </React.Fragment>
     );
     }
