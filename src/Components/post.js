@@ -29,6 +29,7 @@ class NewPost extends React.Component {
     Submit = (event) => {
         event.preventDefault();
         this.Newpost();
+        window.location.reload()
     };
 
     render() {
@@ -41,7 +42,7 @@ class NewPost extends React.Component {
                 backgroundColor: "transparent"
               }}
             >
-                
+
             <Form onSubmit={this.Submit}
             style={{ width: "60%", margin: "20px auto" }}>
                 <Form.Field>
